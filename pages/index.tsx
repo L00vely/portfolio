@@ -26,9 +26,14 @@ export default function Home(props: Props) {
 
   const title = t('home');
   const certificatesTitle = t('certificates');
+  const skillsTitle = t('skills');
+  const projectsTitle = t('projects');
 
   const { memorizedSkills } = useGetSkills(locale, altLocale);
+
   const { memorizedCertificates } = useGetCertificates(locale, altLocale);
+
+  
 
 
   return (
@@ -40,7 +45,9 @@ export default function Home(props: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Section
+      {/* ABOUT ME */}
+
+      {/* <Section
         flexDir="column"
         backGroundColor="brand.primary"
         justifyContent="center"
@@ -70,7 +77,7 @@ export default function Home(props: Props) {
 
           </HStack>
         }
-      />
+      /> */}
 
       {/* SKILLS SECTION */}
       <Section
@@ -88,7 +95,7 @@ export default function Home(props: Props) {
               w="auto"
               textAlign="center"
             > 
-              SKILLS
+              { skillsTitle }
             </Heading>
 
             <Grid
@@ -153,7 +160,7 @@ export default function Home(props: Props) {
               w="auto"
               textAlign="center"
             > 
-              SKILLS
+              { certificatesTitle }
             </Heading>
 
             <Grid
@@ -164,53 +171,157 @@ export default function Home(props: Props) {
               gridAutoRows="fit-content"
             >
               {
-                memorizedCertificates.map((certificate, index) => (
-                  <ModificableCard
-                    key={index} 
-                    children={
-                      <>
-                        <Image 
-                          src={ certificate.certificate.url }
-                          alt={ certificate.name }
-                          width="10rem"
-                          height="auto"
-                        />
-                        
-                        <Divider />
+                memorizedCertificates.map((certificate, index) => {
+                  const { month } = transformDate( certificate.date, locale)
+                  const { year } = transformDate( certificate.date)
 
-                        <HStack>
-                          <CalendarIcon />
-                        </HStack>
+                  return (
+                    <ModificableCard
+                      key={index} 
+                      children={
+                        <>
+                          <Image 
+                            src={ certificate.certificate.url }
+                            alt={ certificate.name }
+                            width="10rem"
+                            height="auto"
+                          />
+                          
+                          <Divider />
 
-                        <Text
-                          color="colors.gray"
-                          fontSize="md"
-                          fontWeight="bold"
-                        >
-                            { certificate.name }  
-                        </Text>
+                          <HStack
+                            alignSelf='flex-start'
+                          >
+                            <CalendarIcon />
 
-                      </>
-                     
-                    } 
+                            <Text 
+                              opacity=".75" 
+                              fontSize="md"
+                              fontWeight="bold"
+                            >
+                              { `${month} ${year}` }
+                            </Text>
+                          </HStack>
 
-                    padding='1rem'
-                    w="100%" 
-                    h="100%" 
-                    flexDir={'column'} 
-                    backGroundColor={'colors.white'} 
-                    justifyContent={'center'} 
-                    alignItems={'center'}  
-                    borderRadius='5%'                  
-                  />
-                )
+                          <Text
+                            fontSize="md"
+                            fontWeight="bold"
+                            alignSelf='flex-start'
+                            w="100%"
+                          >
+                              { certificate.name }  
+                          </Text>
+
+                        </>
+                      
+                      } 
+
+                      padding='1rem'
+                      w="100%" 
+                      h="100%" 
+                      flexDir={'column'} 
+                      backGroundColor={'colors.white'} 
+                      justifyContent={'center'} 
+                      alignItems={'center'}  
+                      borderRadius='5%'                  
+                    />
+                  )
+                }
               )
              } 
             </Grid>
           </>
         }
       />
-       
+      
+      {/* <Section
+        flexDir="column"
+        backGroundColor="brand.primary"
+        justifyContent="center"
+        alignItems="center"
+        children={
+          <>
+            <Heading 
+              as='h2'
+              color='brand.secondary'
+              bg='colors.white'
+              p=".5rem"
+              w="auto"
+              textAlign="center"
+            > 
+              { projectsTitle }
+            </Heading>
+
+            <Grid
+              templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
+              gap="2rem"
+              w="100%"
+              justifyContent="center"
+              gridAutoRows="fit-content"
+            >
+              {
+                memorizedCertificates.map((certificate, index) => {
+                  const { month } = transformDate( certificate.date, locale)
+                  const { year } = transformDate( certificate.date)
+
+                  return (
+                    <ModificableCard
+                      key={index} 
+                      children={
+                        <>
+                          <Image 
+                            src={ certificate.certificate.url }
+                            alt={ certificate.name }
+                            width="10rem"
+                            height="auto"
+                          />
+                          
+                          <Divider />
+
+                          <HStack
+                            alignSelf='flex-start'
+                          >
+                            <CalendarIcon />
+
+                            <Text 
+                              opacity=".75" 
+                              fontSize="md"
+                              fontWeight="bold"
+                            >
+                              { `${month} ${year}` }
+                            </Text>
+                          </HStack>
+
+                          <Text
+                            fontSize="md"
+                            fontWeight="bold"
+                            alignSelf='flex-start'
+                            w="100%"
+                          >
+                              { certificate.name }  
+                          </Text>
+
+                        </>
+                      
+                      } 
+
+                      padding='1rem'
+                      w="100%" 
+                      h="100%" 
+                      flexDir={'column'} 
+                      backGroundColor={'colors.white'} 
+                      justifyContent={'center'} 
+                      alignItems={'center'}  
+                      borderRadius='5%'                  
+                    />
+                  )
+                }
+              )
+             } 
+            </Grid>
+          </>
+        }
+      /> */}
     
     </>
   )

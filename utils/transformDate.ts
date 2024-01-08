@@ -3,24 +3,28 @@ interface MonthAndYear {
   year: number;
 }
 
-function transformDate(s: string): MonthAndYear {
+function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function transformDate(s: string, locale: string = 'en-US'): MonthAndYear {
   // Create a Date object from the provided string
   const date = new Date(s);
 
-  // Array of month names
-  const monthNames: string[] = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  // Get the month and year using toLocaleDateString with the specified locale
+  const options: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
+  const dateString = date.toLocaleDateString(locale, options);
 
-  // Get the month and year
-  const month: number = date.getMonth(); // Months range from 0 to 11
-  const year: number = date.getFullYear();
+  // Split the dateString into an array of [month, year]
+  const [month, year] = dateString.split(' ');
+
+  // Capitalize the first letter of the month
+  const capitalizedMonth = capitalizeFirstLetter(month);
 
   // Create and return an object with properties month and year
   const result: MonthAndYear = {
-      month: monthNames[month],
-      year: year
+    month: capitalizedMonth,
+    year: parseInt(year, 10)
   };
 
   return result;
