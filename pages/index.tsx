@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import Head from 'next/head'
-import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip } from '@chakra-ui/react'
+import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider } from '@chakra-ui/react'
 import { CalendarIcon, DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import useTranslation from 'next-translate/useTranslation';
@@ -17,6 +17,9 @@ interface Props {
 }
 
 export default function Home(props: Props) {
+
+  const { isOpen, onToggle } = useDisclosure()
+  
   const { locale, locales, altLocale } = props;
 
   const { t } = useTranslation('pages')
@@ -69,9 +72,10 @@ export default function Home(props: Props) {
         }
       />
 
+      {/* SKILLS SECTION */}
       <Section
         flexDir="column"
-        backGroundColor="brand.secondary"
+        backGroundColor="brand.primary"
         justifyContent="center"
         alignItems="center"
         children={
@@ -88,8 +92,11 @@ export default function Home(props: Props) {
             </Heading>
 
             <Grid
-              templateColumns="repeat(7, 1fr)"
+              templateColumns="repeat(auto-fill, minmax(8rem, 1fr))"
               gap="2rem"
+              w="100%"
+              justifyContent="center"
+              gridAutoRows="10rem"
             >
               {
                 memorizedSkills.map((skill, index) => (
@@ -114,13 +121,13 @@ export default function Home(props: Props) {
 
                       </>
                     } 
-                    w={'10rem'} 
-                    h={'10rem'} 
+                    w="100%" 
+                    h="100%" 
                     flexDir={'column'} 
                     backGroundColor={'colors.white'} 
                     justifyContent={'center'} 
                     alignItems={'center'}  
-                    borderRadius='25%'                  
+                    borderRadius='10%'                  
                   />
                 )
               )
@@ -130,100 +137,81 @@ export default function Home(props: Props) {
         }
       />
 
+      {/* CERTIFICATES SECTION */}
       <Section
         flexDir="column"
-        // backGroundColor="colors.white"
-        backGroundColor="brand.primary"
+        backGroundColor="brand.secondary"
         justifyContent="center"
         alignItems="center"
         children={
           <>
             <Heading 
               as='h2'
-              color='colors.white'
-              // bg='brand.secondary'
+              color='brand.secondary'
+              bg='colors.white'
               p=".5rem"
               w="auto"
               textAlign="center"
             > 
-              { certificatesTitle }
+              SKILLS
             </Heading>
 
             <Grid
-              templateColumns="repeat(2, 1fr)"
+              templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
               gap="2rem"
+              w="100%"
+              justifyContent="center"
+              gridAutoRows="fit-content"
             >
               {
                 memorizedCertificates.map((certificate, index) => (
                   <ModificableCard
-                    flexDir='row'
-                    key={index}
-                    w="100%"
-                    h="60"
-                    borderRadius="1rem"
-                    backGroundColor="colors.white"
-                    justifyContent="center"
-                    alignItems="center"
+                    key={index} 
                     children={
-                      <HStack h="100%" w="100%">
+                      <>
                         <Image 
-                          src={certificate.certificate.url}
-                          alt={certificate.name}
-                          width={60}
-                          height={60}
-                          p="1rem"
+                          src={ certificate.certificate.url }
+                          alt={ certificate.name }
+                          width="10rem"
+                          height="auto"
                         />
-                        <VStack
-                          backgroundColor="brand.secondary"
-                          p="1rem"
-                          color="colors.white"
-                          // backgroundColor="colors.white"
-                          h="100%"
-                          w="100%"
-                          // alignItems="center"
-                          // justify="center"
+                        
+                        <Divider />
+
+                        <HStack>
+                          <CalendarIcon />
+                        </HStack>
+
+                        <Text
+                          color="colors.gray"
+                          fontSize="md"
+                          fontWeight="bold"
                         >
-                          <Text
-                            fontSize="xl"
-                            fontWeight="bold"
-                            textAlign="left"
-                            // align="center"
-                          >
-                            {certificate.name}
-                          </Text>
+                            { certificate.name }  
+                        </Text>
 
-                          {/* <Text
-                            fontSize="xl"
-                            fontWeight="bold"
-                          >
-                            { transformDate(certificate.date).year }
-                          </Text> */}
+                      </>
+                     
+                    } 
 
-                          <HStack  >
-                            <Tooltip label="Abrir en otra pestaña" aria-label="Abrir en otra pestaña">
-                              <ExternalLinkIcon mr=".5rem" cursor="pointer"/>              
-                            </Tooltip>
-                            
-
-                            <Tooltip label="Descargar" aria-label="Descargar" >
-                              <DownloadIcon mr=".5rem"cursor="pointer"/>  
-                            </Tooltip>
-              
-                          </HStack>
-
-                        </VStack>
-                      </HStack>
-                    }
-                   
+                    padding='1rem'
+                    w="100%" 
+                    h="100%" 
+                    flexDir={'column'} 
+                    backGroundColor={'colors.white'} 
+                    justifyContent={'center'} 
+                    alignItems={'center'}  
+                    borderRadius='5%'                  
                   />
                 )
               )
              } 
-             
             </Grid>
           </>
         }
       />
+       
+    
     </>
   )
 }
