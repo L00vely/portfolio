@@ -1,4 +1,8 @@
 {
     "label": "ES",
-    "footer": "All rights reserved ©"
+    "footer": "All rights reserved ©",
+    "icons": "Icons by ",
+    "language": "Languages",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
 }

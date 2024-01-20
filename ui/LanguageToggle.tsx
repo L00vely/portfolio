@@ -1,7 +1,6 @@
 import Link from "next/link";
-import PropTypes from 'prop-types';
 import { useRouter } from "next/router";
-import { Button } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 import { GrLanguage } from "react-icons/gr"
 import useTranslation from 'next-translate/useTranslation'
 
@@ -32,21 +31,26 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ slug, altSlug, altLocal
     const label = t('label');
 
     return (
-        <Link href={ fullPath } locale={ altLocale }>
-            <Button 
-                leftIcon={<GrLanguage />} 
-                color="colors.white" 
-                backgroundColor="brand.secondary" 
-                variant='ghost'
-                _hover={{ 
-                    backgroundColor: 'colors.white',
-                    color: 'brand.secondary'
-                }}
-            >
-                { label }
-            </Button>
-        </Link>
+        <Box w="100%">
+            <Link href={ fullPath } locale={ altLocale }>
+                <Button 
+                    leftIcon={<GrLanguage />} 
+                    w="100%"
+                    color="colors.gray" 
+                    backgroundColor="colors.white" 
+                    variant='ghost'
+                    _hover={{ 
+                        backgroundColor: 'colors.white',
+                        color: 'brand.secondary'
+                    }}
+                >
+                    <Text as="p" fontSize="sm"> { label } </Text>
+                </Button>
         
+            </Link>
+        </Box>
+        
+    
     )
 }
 

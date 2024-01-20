@@ -18,16 +18,16 @@ export const ModificableCard: React.FC<CardProps> = (CardProps) => {
   
     return (
     <Card
-        flexDirection={ flexDir }
-        w={ w}
-        h={ h }
-        justify={ justifyContent }
-        align={ alignItems }
-        gap="1rem"
-        bg={ backGroundColor }
-        borderRadius={ borderRadius } 
-        boxShadow="lg"
-        p={ padding }
+      flexDirection={ flexDir }
+      w={ w}
+      h={ h }
+      justify={ justifyContent }
+      align={ alignItems }
+      gap="1rem"
+      bg={ backGroundColor }
+      borderRadius={ borderRadius } 
+      boxShadow="lg"
+      p={ padding }
     >
         { children }
     </Card>

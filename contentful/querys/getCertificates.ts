@@ -15,7 +15,7 @@ interface CertificateCollection {
 const getCertificates = async (locale: String): Promise<CertificateCollection | undefined> => {
   const query = `
         query {
-            certificateCollection(locale: "${locale}") {
+            certificateCollection(order: [date_DESC], locale: "${locale}") {
                 items {
                   name
                   certificate {
@@ -30,7 +30,6 @@ const getCertificates = async (locale: String): Promise<CertificateCollection | 
   try {
     const data = await contentfulClient.request<{ certificateCollection: CertificateCollection }>(query);
     const { certificateCollection } = data;
-    console.log(certificateCollection)
     return certificateCollection;
   } catch (error) {
     console.error(error);

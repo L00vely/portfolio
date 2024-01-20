@@ -1,6 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import Head from 'next/head'
-import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider } from '@chakra-ui/react'
+import Image from 'next/image';
+import { Card, Flex, Heading, Text, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, Avatar, useBreakpointValue, useColorModeValue } from '@chakra-ui/react'
 import { CalendarIcon, DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import useTranslation from 'next-translate/useTranslation';
@@ -22,307 +23,108 @@ export default function Home(props: Props) {
   
   const { locale, locales, altLocale } = props;
 
-  const { t } = useTranslation('pages')
+  const { t } = useTranslation()
 
-  const title = t('home');
-  const certificatesTitle = t('certificates');
-  const skillsTitle = t('skills');
-  const projectsTitle = t('projects');
+  const info = [
+    t('about:greeting'),
+    t('about:name'),
+    t('about:activity')
+  ]
 
-  const { memorizedSkills } = useGetSkills(locale, altLocale);
+  const title = t('pages:home')
 
-  const { memorizedCertificates } = useGetCertificates(locale, altLocale);
+  const gridTemplateAreas = useBreakpointValue({
+    base: `"avatar"
+    "description"`,
 
-  
+    md: `"description avatar"`,
+    
+    lg: `"description avatar"`,
 
+    xl: `"description avatar"`
+  });
+
+  const gridTemplateRows = useBreakpointValue({
+    base: "1fr 1fr",
+
+    md: "1fr",
+    
+    lg: "1fr",
+
+    xl: "1fr"
+  })
+
+  const gridTemplateColumns = useBreakpointValue({
+    base: "1fr",
+
+    md: "1fr 1fr",
+    
+    lg: "1fr 1fr",
+
+    xl: "1fr 1fr"
+  })
+
+  const color = useColorModeValue("colors.gray", "colors.white")
 
   return (
     <>
       <Head>
         <title>{title}</title>
         <meta name="description" content="Personal Portfolio" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {/* ABOUT ME */}
 
-      {/* <Section
+      <Section
         flexDir="column"
-        backGroundColor="brand.primary"
         justifyContent="center"
         alignItems="center"
         children={
-          <HStack>
-
-            <Heading 
-              as='h2'
-              color='colors.white'
-              w="auto"
-              textAlign="center"
-            > 
-              I&apos;m David Perales
-            </Heading>
-
-            <VStack>
-              <Heading
-                as='h3'
-                color='colors.white'
-                w="auto"
-                textAlign="center"
-              >
-                ABOUT ME
-              </Heading>
+          <Grid
+            templateAreas={ gridTemplateAreas }
+            templateColumns={ gridTemplateColumns }
+            gridTemplateRows={ gridTemplateRows }
+            w="60%"
+            gap="2rem"
+          >
+            <VStack 
+              gridArea="description"
+              alignItems="flex-start"
+            >
+              {
+                info.map((info,index) => (
+                  <Heading 
+                    key={index}
+                    as='h1'
+                    color={color}
+                    w="auto"
+                  > 
+                    { info }
+                  </Heading>
+                ))
+              }
             </VStack>
 
-          </HStack>
-        }
-      /> */}
+            <Box gridArea="avatar">
+              <Image
+                
+                width="256" 
+                height="256" 
+                alt='Avatar' 
+                src='https://images.ctfassets.net/29rp0bxqbuvh/1LN6pyw9NzC4pDPiBAYTEF/98f2982d922a677f24f583354b5f157e/OIG.2RhaA95CR4v-removebg-preview.png' 
+              />
+            </Box>
+            
 
-      {/* SKILLS SECTION */}
-      <Section
-        flexDir="column"
-        backGroundColor="brand.primary"
-        justifyContent="center"
-        alignItems="center"
-        children={
-          <>
-            <Heading 
-              as='h2'
-              color='brand.secondary'
-              bg='colors.white'
-              p=".5rem"
-              w="auto"
-              textAlign="center"
-            > 
-              { skillsTitle }
-            </Heading>
-
-            <Grid
-              templateColumns="repeat(auto-fill, minmax(8rem, 1fr))"
-              gap="2rem"
-              w="100%"
-              justifyContent="center"
-              gridAutoRows="10rem"
-            >
-              {
-                memorizedSkills.map((skill, index) => (
-                  <ModificableCard
-                    key={index} 
-                    children={
-                      <>
-                        <Image 
-                          src={skill.icon}
-                          alt={skill.name}
-                          width={50}
-                          height={50}
-                        />
-                        
-                        <Text
-                          color="colors.gray"
-                          fontSize="md"
-                          fontWeight="bold"
-                        >
-                            {skill.name}  
-                        </Text>
-
-                      </>
-                    } 
-                    w="100%" 
-                    h="100%" 
-                    flexDir={'column'} 
-                    backGroundColor={'colors.white'} 
-                    justifyContent={'center'} 
-                    alignItems={'center'}  
-                    borderRadius='10%'                  
-                  />
-                )
-              )
-             } 
-            </Grid>
-          </>
+          </Grid>
         }
       />
-
-      {/* CERTIFICATES SECTION */}
-      <Section
-        flexDir="column"
-        backGroundColor="brand.secondary"
-        justifyContent="center"
-        alignItems="center"
-        children={
-          <>
-            <Heading 
-              as='h2'
-              color='brand.secondary'
-              bg='colors.white'
-              p=".5rem"
-              w="auto"
-              textAlign="center"
-            > 
-              { certificatesTitle }
-            </Heading>
-
-            <Grid
-              templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
-              gap="2rem"
-              w="100%"
-              justifyContent="center"
-              gridAutoRows="fit-content"
-            >
-              {
-                memorizedCertificates.map((certificate, index) => {
-                  const { month } = transformDate( certificate.date, locale)
-                  const { year } = transformDate( certificate.date)
-
-                  return (
-                    <ModificableCard
-                      key={index} 
-                      children={
-                        <>
-                          <Image 
-                            src={ certificate.certificate.url }
-                            alt={ certificate.name }
-                            width="10rem"
-                            height="auto"
-                          />
-                          
-                          <Divider />
-
-                          <HStack
-                            alignSelf='flex-start'
-                          >
-                            <CalendarIcon />
-
-                            <Text 
-                              opacity=".75" 
-                              fontSize="md"
-                              fontWeight="bold"
-                            >
-                              { `${month} ${year}` }
-                            </Text>
-                          </HStack>
-
-                          <Text
-                            fontSize="md"
-                            fontWeight="bold"
-                            alignSelf='flex-start'
-                            w="100%"
-                          >
-                              { certificate.name }  
-                          </Text>
-
-                        </>
-                      
-                      } 
-
-                      padding='1rem'
-                      w="100%" 
-                      h="100%" 
-                      flexDir={'column'} 
-                      backGroundColor={'colors.white'} 
-                      justifyContent={'center'} 
-                      alignItems={'center'}  
-                      borderRadius='5%'                  
-                    />
-                  )
-                }
-              )
-             } 
-            </Grid>
-          </>
-        }
-      />
-      
-      {/* <Section
-        flexDir="column"
-        backGroundColor="brand.primary"
-        justifyContent="center"
-        alignItems="center"
-        children={
-          <>
-            <Heading 
-              as='h2'
-              color='brand.secondary'
-              bg='colors.white'
-              p=".5rem"
-              w="auto"
-              textAlign="center"
-            > 
-              { projectsTitle }
-            </Heading>
-
-            <Grid
-              templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
-              gap="2rem"
-              w="100%"
-              justifyContent="center"
-              gridAutoRows="fit-content"
-            >
-              {
-                memorizedCertificates.map((certificate, index) => {
-                  const { month } = transformDate( certificate.date, locale)
-                  const { year } = transformDate( certificate.date)
-
-                  return (
-                    <ModificableCard
-                      key={index} 
-                      children={
-                        <>
-                          <Image 
-                            src={ certificate.certificate.url }
-                            alt={ certificate.name }
-                            width="10rem"
-                            height="auto"
-                          />
-                          
-                          <Divider />
-
-                          <HStack
-                            alignSelf='flex-start'
-                          >
-                            <CalendarIcon />
-
-                            <Text 
-                              opacity=".75" 
-                              fontSize="md"
-                              fontWeight="bold"
-                            >
-                              { `${month} ${year}` }
-                            </Text>
-                          </HStack>
-
-                          <Text
-                            fontSize="md"
-                            fontWeight="bold"
-                            alignSelf='flex-start'
-                            w="100%"
-                          >
-                              { certificate.name }  
-                          </Text>
-
-                        </>
-                      
-                      } 
-
-                      padding='1rem'
-                      w="100%" 
-                      h="100%" 
-                      flexDir={'column'} 
-                      backGroundColor={'colors.white'} 
-                      justifyContent={'center'} 
-                      alignItems={'center'}  
-                      borderRadius='5%'                  
-                    />
-                  )
-                }
-              )
-             } 
-            </Grid>
-          </>
-        }
-      /> */}
-    
     </>
   )
 }

@@ -13,7 +13,7 @@ interface SkillsHookResult {
     memorizedCertificates: Certificate[]; 
 }
   
-  const useGetCertificates = (locale: string, altLocale: string): SkillsHookResult => {
+  const useGetCertificates = (locale: string): SkillsHookResult => {
     const [certificates, setCertificates] = useState<Certificate[]>([]);
 
     useEffect(() => {

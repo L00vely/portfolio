@@ -1,6 +1,12 @@
 import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/raleway"; 
 
+const colorConfig = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+}
+
+
 const colors = {
     brand: {
       "primary": '#1D1D1D',
@@ -58,6 +64,7 @@ const globalStyles = {
 const theme = extendTheme({
     colors,
     styles: globalStyles,
+    ...colorConfig 
 });
 
 export default theme;

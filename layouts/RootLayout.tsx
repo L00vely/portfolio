@@ -1,8 +1,10 @@
 // RootLayout.tsx
 import Footer from '@/ui/Footer';
 import Header from '@/ui/Header';
-import { Box, Grid, GridItem, VStack } from '@chakra-ui/react';
+import SiteDrawer from '@/ui/Drawer';
+import { Box, Grid, GridItem, useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
+import Drawer from '@/ui/Drawer';
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -16,21 +18,58 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children, pageProps }) => {
 
+  const gridTemplateAreas = useBreakpointValue({
+    base: `"drawer"
+    "main"
+    "footer"`,
+
+    md: `"drawer main"
+    "drawer footer"`,
+    
+    lg: `"drawer main"
+    "drawer footer"`,
+
+    xl: `"drawer main"
+    "drawer footer"`
+  });
+
+  const gridTemplateRows = useBreakpointValue({
+    base: ".25fr 4fr .25fr",
+
+    md: "2fr .25fr",
+    
+    lg: "2fr .25fr",
+
+    xl: "2fr .25fr"
+  })
+
+  const gridTemplateColumns = useBreakpointValue({
+    base: "1fr",
+
+    md: "15rem 1fr",
+    
+    lg: "15rem 1fr",
+
+    xl: "15rem 1fr"
+  })
+
   return (
     <Grid
-      gridTemplateRows=".25fr 4fr .25fr"
-      gridTemplateColumns="1fr 1fr"
-      templateAreas={`"header header"
-        "main main"
-        "footer footer"`} 
+      templateRows= {gridTemplateRows}
+      templateColumns={ gridTemplateColumns }
+      templateAreas={ gridTemplateAreas } 
       w='100vw'
       h="100vh"
-      bg="brand.primary"
-      
+      overflowX="hidden"
     >
-      <Header logoAlt="hola" logoSrc='/logo.png' pageProps={ pageProps }/>
+      <Drawer pageProps={ pageProps }/>
 
-      <VStack as='main' gridArea="main" spacing="0">{children}</VStack>
+      <GridItem 
+        as='main' 
+        gridArea="main"
+      > 
+        { children }
+      </GridItem>
 
       <Footer />
      

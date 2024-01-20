@@ -1,31 +1,29 @@
 // Section.tsx
-import { Flex } from '@chakra-ui/react';
+import { Flex, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation'
 
 interface SectionProps {
     children: React.ReactNode;
     flexDir: string;
-    backGroundColor: string;
+    
     justifyContent: string;
     alignItems: string;
 }
 
 const Section: React.FC<SectionProps> = (SectionProps) => {
-  const { children, flexDir, backGroundColor, justifyContent, alignItems } = SectionProps;
+  const { children, flexDir, justifyContent, alignItems } = SectionProps;
 
-  // Traducir el label del botón de idiomas
-  const { t } = useTranslation('common')
-  const label = t('footer');
+  const bg =  useColorModeValue("colors.white", "brand.primary")
 
   return (
     <Flex
       as='section'
-      flexDirection={flexDir}
-      w="100vw"
-      bg={ backGroundColor }
+      h="100vh"
+      bg={ bg }
       p="2rem"
       gap="2rem"
+      flexDirection={ flexDir }
       justify={ justifyContent }
       align={ alignItems }
     >
