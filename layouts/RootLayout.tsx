@@ -1,8 +1,6 @@
 // RootLayout.tsx
 import Footer from '@/ui/Footer';
-import Header from '@/ui/Header';
-import SiteDrawer from '@/ui/Drawer';
-import { Box, Grid, GridItem, useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
+import {  Grid, GridItem, useBreakpointValue } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
 import Drawer from '@/ui/Drawer';
 
