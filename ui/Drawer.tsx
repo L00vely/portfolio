@@ -31,13 +31,10 @@ const Drawer: React.FC<DrawerProps> = ({ pageProps }) => {
 
   const route = useRouter()
 
-  const languageTitle = t("common:language")
-
-
   const sites: { name: string; link: string }[] = [
     { name: t('routes:home'), link: '/'},
     { name: t('routes:about'), link: '/about'},
-    { name: t('routes:projects'), link: '/projects'},
+    // { name: t('routes:projects'), link: '/projects'},
   ];
 
   const { isOpen, onToggle } = useDisclosure()
@@ -150,11 +147,6 @@ const Drawer: React.FC<DrawerProps> = ({ pageProps }) => {
           </VStack>
         </VStack>
       </Collapse>
-
-      
-      
-    
-      
     </VStack>
   );
 };
