@@ -1,5 +1,7 @@
 {
-    "label": "ENG",
+    "englishLabel": "Inglés",
+    "frenchLabel": "Francés",
+    "spanishLabel":"Español",
     "footer": "Todos los derechos reservados ©",
     "icons": "Iconos de ",
     "language": "Idiomas",

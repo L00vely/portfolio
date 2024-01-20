@@ -14,12 +14,13 @@ interface DrawerProps {
     slug?: string;
     altSlug?: string;
     locale: string;
+    locales: string[];
     altLocale: string;
   }
 }
 
 const Drawer: React.FC<DrawerProps> = ({ pageProps }) => {
-  const { locale, slug, altSlug, altLocale } = pageProps;
+  const { locales, locale, slug, altSlug, altLocale } = pageProps;
   const { t } = useTranslation();
 
   const bg = useColorModeValue("brand.secondary", "brand.primary")
@@ -55,7 +56,6 @@ const Drawer: React.FC<DrawerProps> = ({ pageProps }) => {
     <VStack
       p="1rem"
       h="100%"
-      w="100%"
       gridArea="drawer"
       bg= { bg }
       color= "colors.white"
@@ -137,8 +137,13 @@ const Drawer: React.FC<DrawerProps> = ({ pageProps }) => {
           </UnorderedList>
 
           <VStack w="100%" h="100%" spacing="1rem">
-            <Text>{ languageTitle }</Text>
-            <LanguageToggle slug={ slug } altSlug={ altSlug } altLocale={ altLocale } />
+           
+            <LanguageToggle 
+              locale={ locale } 
+              slug={ slug } 
+              altSlug={ altSlug } 
+              altLocale={ altLocale } 
+            />
 
             <Text>{ colorModeTitle }</Text>
             <ColorModeToggle />

@@ -18,7 +18,8 @@ const Section: React.FC<SectionProps> = (SectionProps) => {
     <Flex
       as='section'
       flexDir="column"
-      h="100vh"
+      h="100%"
+      w="100%"
       bg={ bg }
       p="2rem"
       gap="2rem"

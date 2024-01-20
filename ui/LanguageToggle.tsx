@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Box, Button, Text } from '@chakra-ui/react';
+import { Image, Button, Icon, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { GrLanguage } from "react-icons/gr"
 import useTranslation from 'next-translate/useTranslation'
 
@@ -8,9 +8,10 @@ interface LanguageToggleProps {
     slug?: string;
     altSlug?: string;
     altLocale: string;
+    locale: string,
   }
 
-const LanguageToggle: React.FC<LanguageToggleProps> = ({ slug, altSlug, altLocale }) => {
+const LanguageToggle: React.FC<LanguageToggleProps> = ({ slug, altSlug, locale, altLocale }) => {
 
     const router = useRouter();
 
@@ -28,11 +29,51 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ slug, altSlug, altLocal
 
     // Traducir el label del botón de idiomas
     const { t } = useTranslation('common')
-    const label = t('label');
+
+    const languageMapping: Record<string, string> = {
+        'en-US': t('englishLabel'),
+        'es': t('spanishLabel'),
+    }
+
+    // Get the localized language from the mapping object or return the original language code if not mapped
+    const localizedLanguage = languageMapping[locale] || locale;
 
     return (
-        <Box w="100%">
-            <Link href={ fullPath } locale={ altLocale }>
+        <Menu>
+           
+            <MenuButton as={Button} w="100%" rightIcon={<GrLanguage/>}>
+                { localizedLanguage  }
+            </MenuButton>
+            <MenuList width="fit-content" bg="brand.secondary" p="0rem">
+                {   
+                    Object.entries(languageMapping).map(([key, value]) => (
+                        <Link 
+                            href={ fullPath } 
+                            locale={ key } 
+                            key={ value }
+                        >
+                            <MenuItem
+                                fontWeight="bold"
+                                color="colors.gray" 
+                                h="100%"
+                                _hover={{ 
+                                    backgroundColor: 'colors.white',
+                                    color: 'brand.secondary'
+                                }}
+                            >
+                                <Text as="p" fontSize="sm"> { value } </Text>
+                            </MenuItem>
+                    
+                        </Link>
+                    ))
+                            
+                    //     )
+                    // })
+                }
+               
+            </MenuList>
+            
+            {/* <Link href={ fullPath } locale={ altLocale }>
                 <Button 
                     leftIcon={<GrLanguage />} 
                     w="100%"
@@ -47,8 +88,8 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ slug, altSlug, altLocal
                     <Text as="p" fontSize="sm"> { label } </Text>
                 </Button>
         
-            </Link>
-        </Box>
+            </Link> */}
+        </Menu>
         
     
     )

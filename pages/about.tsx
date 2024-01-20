@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import Head from 'next/head'
-import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue } from '@chakra-ui/react'
+import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar } from '@chakra-ui/react'
 import { CalendarIcon, DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import useTranslation from 'next-translate/useTranslation';
@@ -20,7 +20,7 @@ export default function Home(props: Props) {
 
   const { isOpen, onToggle } = useDisclosure()
   
-  const { locale, locales, altLocale } = props;
+  const { locale, altLocale } = props;
 
   const { t } = useTranslation('pages')
 
@@ -33,6 +33,8 @@ export default function Home(props: Props) {
   const { memorizedCertificates } = useGetCertificates(locale);
 
   const color = useColorModeValue("colors.gray", "colors.white")
+
+
 
 
   return (
@@ -48,117 +50,101 @@ export default function Home(props: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
-      {/* SKILLS SECTION */}
-      <Section
-        justifyContent="center"
-        alignItems="center"
-        children={
-          <>
-            <Heading 
-              as='h2'
-              color={color}
-              p=".5rem"
-              w="auto"
-              textAlign="center"
-            > 
-              { skillsTitle }
-            </Heading>
-
-            <Grid
-              templateColumns={["repeat(auto-fill, minmax(5rem, 1fr))", "repeat(auto-fill, minmax(10rem, 1fr))"]}
-              gap="2rem"
-              w="50vw"
-              justifyContent="center"
-              gridAutoRows="10rem"
+      <VStack w="100%" h="100%" spacing="0">
+        <Section
+          justifyContent="flex-start"
+          alignItems="center"
+          children={
+            <VStack
+              w="60%"
+              spacing="1rem"
             >
-              {
-                memorizedSkills.map((skill, index) => (
-                  <ModificableCard
-                    key={index} 
-                    w="100%" 
-                    h="10rem" 
-                    flexDir={'column'} 
-                    backGroundColor={'colors.white'} 
-                    justifyContent={'center'} 
-                    alignItems={'center'}  
-                    borderRadius='10%'  
-                    children={
-                      <>
-                        <Image 
-                          src={skill.icon}
-                          alt={skill.name}
-                          width={50}
-                          height={50}
-                        />
-                        
-                        <Text
-                          color="colors.gray"
-                          fontSize="md"
-                          fontWeight="bold"
-                        >
-                            {skill.name}  
-                        </Text>
+              <Heading 
+                as='h1'
+                color={color}
+                w="auto"
+              > 
+                { skillsTitle }
+              </Heading>
 
-                      </>
-                    }                 
-                  />
-                )
-              )
-             } 
-            </Grid>
-          </>
-        }
-      />
+              <Grid
+                templateColumns={["repeat(2, 1fr)","repeat(6, 10rem)"]}
+                autoRows="fit-content"
+                gap="1rem"
+                w="100%"
+              >
+                {
+                  memorizedSkills.map((skill, index) => {
+                    const { icon, name } = skill;
 
-      {/* CERTIFICATES SECTION */}
-      <Section
-        justifyContent="center"
-        alignItems="center"
-        children={
-          <>
-            <Heading 
-              as='h2'
-              color={color}
-              p=".5rem"
-              textAlign="left"
-            > 
-              { certificatesTitle }
-            </Heading>
+                    return(
+                      <Card 
+                        key="index" 
+                        h="100%"
+                        w="100%"
+                        bg="colors.white"
+                        boxShadow="lg"
+                        p="1rem"
+                      >
+                        <VStack h="100%" w="100%" align="center" >
+                          <Avatar src={ icon } size="16"/>
 
-            <Grid
-              templateColumns="repeat(auto-fill, minmax(15rem, 1fr))"
-              gap="2rem"
-              w="50vw"
-              justifyContent="center"
-              gridAutoRows="fit-content"
+                          <VStack>
+                            <Text color="colors.gray"> { name }</Text>
+                          </VStack>
+                        </VStack>                    
+                      </Card>
+                    )
+                  })
+                }
+              </Grid>
               
-            >
-              {
-                memorizedCertificates.map((certificate, index) => {
-                  const { month } = transformDate( certificate.date, locale)
-                  const { year } = transformDate( certificate.date)
+              
 
-                  return (
-                    <ModificableCard
-                      key={index} 
-                      padding='1rem'
-                      w="100%" 
-                      h="100%" 
-                      flexDir={'column'} 
-                      backGroundColor={'colors.white'} 
-                      justifyContent={'center'} 
-                      alignItems={'center'}  
-                      borderRadius='5%'     
-                      children={
-                        <>
-                          <Image 
-                            src={ certificate.certificate.url }
-                            alt={ certificate.name }
-                            width="10rem"
-                            height="auto"
-                          />
-                          
+            </VStack>
+          }
+        />
+
+        <Section
+          justifyContent="flex-start"
+          alignItems="center"
+          children={
+            <VStack
+              w="60%"
+              spacing="1rem"
+            >
+              <Heading 
+                as='h1'
+                color={color}
+                w="auto"
+              > 
+                { certificatesTitle }
+              </Heading>
+
+              <Grid
+                templateColumns={["repeat(1, 1fr)","repeat(6, 12rem)"]}
+                autoRows="fit-content"
+                gap="1rem"
+                w="100%"
+              >
+                {
+                  memorizedCertificates.map((certificate, index) => {
+                    const { certificate: image , date, name } = certificate;
+
+                    const { month, year } = transformDate(date)
+
+                    return(
+                      <Card 
+                        key="index" 
+                        h="100%"
+                        w="100%"
+                        bg="colors.white"
+                        boxShadow="lg"
+                        p="1rem"
+                      >
+                        <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
+                          <Image alt={name} src={ image.url } w="32" h="32"/>
+                        
                           <Divider />
 
                           <HStack
@@ -184,20 +170,21 @@ export default function Home(props: Props) {
                           >
                               { certificate.name }  
                           </Text>
-
-                        </>
-                      
-                      } 
-             
-                    />
-                  )
+                        </VStack>                    
+                      </Card>
+                    )
+                  })
                 }
-              )
-             } 
-            </Grid>
-          </>
-        }
-      />
+              </Grid>
+              
+              
+
+            </VStack>
+          }
+        />
+      </VStack>
+
+      
     
     </>
   )

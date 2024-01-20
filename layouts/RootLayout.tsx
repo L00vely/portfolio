@@ -10,6 +10,7 @@ interface RootLayoutProps {
   children: ReactNode;
   pageProps: {
     locale: string;
+    locales: string[];
     altLocale: string;
     slug: string;
     altSlug: string;
@@ -67,6 +68,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children, pageProps }) => {
       <GridItem 
         as='main' 
         gridArea="main"
+        
       > 
         { children }
       </GridItem>
