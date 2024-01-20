@@ -51,7 +51,6 @@ export default function Home(props: Props) {
 
       {/* SKILLS SECTION */}
       <Section
-        flexDir="column"
         justifyContent="center"
         alignItems="center"
         children={
@@ -114,7 +113,6 @@ export default function Home(props: Props) {
 
       {/* CERTIFICATES SECTION */}
       <Section
-        flexDir="column"
         justifyContent="center"
         alignItems="center"
         children={

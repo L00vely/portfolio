@@ -4,26 +4,24 @@ import React from 'react';
 import useTranslation from 'next-translate/useTranslation'
 
 interface SectionProps {
-    children: React.ReactNode;
-    flexDir: string;
-    
+    children: React.ReactNode;    
     justifyContent: string;
     alignItems: string;
 }
 
 const Section: React.FC<SectionProps> = (SectionProps) => {
-  const { children, flexDir, justifyContent, alignItems } = SectionProps;
+  const { children, justifyContent, alignItems } = SectionProps;
 
   const bg =  useColorModeValue("colors.white", "brand.primary")
 
   return (
     <Flex
       as='section'
+      flexDir="column"
       h="100vh"
       bg={ bg }
       p="2rem"
       gap="2rem"
-      flexDirection={ flexDir }
       justify={ justifyContent }
       align={ alignItems }
     >

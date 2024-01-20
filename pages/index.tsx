@@ -82,7 +82,6 @@ export default function Home(props: Props) {
       {/* ABOUT ME */}
 
       <Section
-        flexDir="column"
         justifyContent="center"
         alignItems="center"
         children={

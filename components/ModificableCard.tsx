@@ -14,12 +14,11 @@ interface CardProps {
 }
 
 export const ModificableCard: React.FC<CardProps> = (CardProps) => {
-  const { children, flexDir, w, h, borderRadius, padding, backGroundColor, justifyContent, alignItems } = CardProps;
+  const { children, w, h, borderRadius, padding, backGroundColor, justifyContent, alignItems } = CardProps;
   
     return (
     <Card
-      flexDirection={ flexDir }
-      w={ w}
+      w={ w }
       h={ h }
       justify={ justifyContent }
       align={ alignItems }
