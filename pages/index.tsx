@@ -125,15 +125,7 @@ export default function Home(props: Props) {
             </Grid>
           }
         />
-
-        <HStack>
-          <Button>
-            
-          </Button>
-        </HStack>
       </VStack>
-
-      
     </>
   )
 }

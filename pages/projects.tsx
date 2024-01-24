@@ -16,20 +16,17 @@ interface Props {
   locales: string[];
 }
 
-export default function About(props: Props) {
+export default function Projects(props: Props) {
+
   const { locale, altLocale } = props;
 
   const { t } = useTranslation('pages')
 
-  const title = t('about');
+  const title = t('projects');
 
-  const certificatesTitle = t('certificates');
-
-  const skillsTitle = t('skills');
 
   const { memorizedSkills, isLoading: skillsLoaded } = useGetSkills(locale, altLocale);
 
-  const { memorizedCertificates, isLoading: certificatesLoaded } = useGetCertificates(locale);
 
   const color = useColorModeValue("colors.gray", "colors.white")
 
@@ -46,8 +43,6 @@ export default function About(props: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      
-
       <VStack w="100%" h="100%" spacing="0">
         
         <Section
@@ -63,7 +58,7 @@ export default function About(props: Props) {
                 color={color}
                 w="auto"
               > 
-                { skillsTitle }
+                { title }
               </Heading>
 
               <Grid
