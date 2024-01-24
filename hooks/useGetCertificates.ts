@@ -11,10 +11,12 @@ interface Certificate {
   
 interface SkillsHookResult {
     memorizedCertificates: Certificate[]; 
+    isLoading: Boolean
 }
   
   const useGetCertificates = (locale: string): SkillsHookResult => {
     const [certificates, setCertificates] = useState<Certificate[]>([]);
+    const [isLoading, setIsLoading] = useState<Boolean>(true);
 
     useEffect(() => {
       const fetchSkills = async () => {
@@ -22,6 +24,7 @@ interface SkillsHookResult {
           const fetchedCertificates = await getCertificates(locale);
           if (fetchedCertificates) {
             setCertificates(fetchedCertificates.items);
+            setIsLoading(false)
           }
         } catch (error) {
           console.error(error);
@@ -36,6 +39,7 @@ interface SkillsHookResult {
   
     return {
       memorizedCertificates,
+      isLoading
     };
   };
   

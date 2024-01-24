@@ -9,10 +9,13 @@ interface Skill{
 
 interface SkillsHookResult {
     memorizedSkills: Skill[]; 
+    isLoading: boolean
 }
   
   const useGetSkills = (locale: string, altLocale: string): SkillsHookResult => {
     const [skills, setSkills] = useState<Skill[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
     // Obtenemos las categorías dentro del posts
     useEffect(() => {
@@ -21,6 +24,7 @@ interface SkillsHookResult {
           const fetchedSkills = await getSkills();
           if (fetchedSkills) {
             setSkills(fetchedSkills.items);
+            setIsLoading(false)
           }
         } catch (error) {
           console.error(error);
@@ -35,6 +39,7 @@ interface SkillsHookResult {
   
     return {
       memorizedSkills,
+      isLoading
     };
   };
   

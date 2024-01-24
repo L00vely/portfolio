@@ -81,49 +81,59 @@ export default function Home(props: Props) {
 
       {/* ABOUT ME */}
 
-      <Section
-        justifyContent="center"
-        alignItems="center"
-        children={
-          <Grid
-            templateAreas={ gridTemplateAreas }
-            templateColumns={ gridTemplateColumns }
-            gridTemplateRows={ gridTemplateRows }
-            w="60%"
-            gap="2rem"
-          >
-            <VStack 
-              gridArea="description"
-              alignItems="flex-start"
+      <VStack w="100%" h="100%" spacing="0">
+        <Section
+          justifyContent="center"
+          alignItems="center"
+          children={
+            <Grid
+              templateAreas={ gridTemplateAreas }
+              templateColumns={ gridTemplateColumns }
+              gridTemplateRows={ gridTemplateRows }
+              w="60%"
+              gap="2rem"
             >
-              {
-                info.map((info,index) => (
-                  <Heading 
-                    key={index}
-                    as='h1'
-                    color={color}
-                    w="auto"
-                  > 
-                    { info }
-                  </Heading>
-                ))
-              }
-            </VStack>
+              <VStack 
+                gridArea="description"
+                alignItems="flex-start"
+              >
+                {
+                  info.map((info,index) => (
+                    <Heading 
+                      key={index}
+                      as='h1'
+                      color={color}
+                      w="auto"
+                    > 
+                      { info }
+                    </Heading>
+                  ))
+                }
+              </VStack>
 
-            <Box gridArea="avatar">
-              <Image
-                
-                width="256" 
-                height="256" 
-                alt='Avatar' 
-                src='https://images.ctfassets.net/29rp0bxqbuvh/1LN6pyw9NzC4pDPiBAYTEF/98f2982d922a677f24f583354b5f157e/OIG.2RhaA95CR4v-removebg-preview.png' 
-              />
-            </Box>
+              <Box gridArea="avatar">
+                <Image
+                  
+                  width="256" 
+                  height="256" 
+                  alt='Avatar' 
+                  src='https://images.ctfassets.net/29rp0bxqbuvh/1LN6pyw9NzC4pDPiBAYTEF/98f2982d922a677f24f583354b5f157e/OIG.2RhaA95CR4v-removebg-preview.png' 
+                />
+              </Box>
+              
+
+            </Grid>
+          }
+        />
+
+        <HStack>
+          <Button>
             
+          </Button>
+        </HStack>
+      </VStack>
 
-          </Grid>
-        }
-      />
+      
     </>
   )
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Image, Button, Icon, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { Image, Button, Icon, Menu, MenuButton, MenuItem, MenuList, Text, useColorModeValue } from '@chakra-ui/react';
 import { GrLanguage } from "react-icons/gr"
 import useTranslation from 'next-translate/useTranslation'
 
@@ -54,7 +54,8 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({ slug, altSlug, locale, 
                         >
                             <MenuItem
                                 fontWeight="bold"
-                                color="colors.gray" 
+                                bg="colors.white"
+                                color="colors.gray"
                                 h="100%"
                                 _hover={{ 
                                     backgroundColor: 'colors.white',

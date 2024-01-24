@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import Head from 'next/head'
-import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar } from '@chakra-ui/react'
+import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar, Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import { CalendarIcon, DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 import useTranslation from 'next-translate/useTranslation';
@@ -28,9 +28,9 @@ export default function Home(props: Props) {
   const certificatesTitle = t('certificates');
   const skillsTitle = t('skills');
 
-  const { memorizedSkills } = useGetSkills(locale, altLocale);
+  const { memorizedSkills, isLoading: skillsLoaded } = useGetSkills(locale, altLocale);
 
-  const { memorizedCertificates } = useGetCertificates(locale);
+  const { memorizedCertificates, isLoading: certificatesLoaded } = useGetCertificates(locale);
 
   const color = useColorModeValue("colors.gray", "colors.white")
 
@@ -50,7 +50,10 @@ export default function Home(props: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      
+
       <VStack w="100%" h="100%" spacing="0">
+        
         <Section
           justifyContent="flex-start"
           alignItems="center"
@@ -87,20 +90,20 @@ export default function Home(props: Props) {
                         p="1rem"
                       >
                         <VStack h="100%" w="100%" align="center" >
-                          <Avatar src={ icon } size="16"/>
+                          <SkeletonCircle size='16' isLoaded={!skillsLoaded}>
+                            <Image src={ icon } alt={ name } w={16} h={16}/>
+                          </SkeletonCircle>
 
-                          <VStack>
-                            <Text color="colors.gray"> { name }</Text>
-                          </VStack>
+                          <Skeleton isLoaded={!skillsLoaded}>
+                              <Text color="colors.gray"> { name }</Text>
+                          </Skeleton>
                         </VStack>                    
+                  
                       </Card>
                     )
                   })
                 }
               </Grid>
-              
-              
-
             </VStack>
           }
         />
@@ -131,7 +134,8 @@ export default function Home(props: Props) {
                   memorizedCertificates.map((certificate, index) => {
                     const { certificate: image , date, name } = certificate;
 
-                    const { month, year } = transformDate(date)
+                    const { month } = transformDate(date, locale)
+                    const { year } = transformDate(date)
 
                     return(
                       <Card 
@@ -142,43 +146,44 @@ export default function Home(props: Props) {
                         boxShadow="lg"
                         p="1rem"
                       >
-                        <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
-                          <Image alt={name} src={ image.url } w="32" h="32"/>
-                        
-                          <Divider />
+                        <Skeleton isLoaded={!certificatesLoaded}>
+                          <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
+                          
+                            <Image alt={name} src={ image.url } w="32" h="32"/>
+                            
+                            <Divider />
 
-                          <HStack
-                            alignSelf='flex-start'
-                          >
-                            <CalendarIcon />
+                            <HStack
+                              alignSelf='flex-start'
+                            >
+                              <CalendarIcon />
 
-                            <Text 
-                              opacity=".75" 
+                              <Text 
+                                opacity=".75" 
+                                fontSize="md"
+                                fontWeight="bold"
+                                
+                              >
+                                { `${month} ${year}` }
+                              </Text>
+                            </HStack>
+
+                            <Text
                               fontSize="md"
                               fontWeight="bold"
-                              
+                              alignSelf='flex-start'
+                              w="100%"
                             >
-                              { `${month} ${year}` }
+                                { certificate.name }  
                             </Text>
-                          </HStack>
-
-                          <Text
-                            fontSize="md"
-                            fontWeight="bold"
-                            alignSelf='flex-start'
-                            w="100%"
-                          >
-                              { certificate.name }  
-                          </Text>
-                        </VStack>                    
+                          </VStack>                    
+                        </Skeleton>
+                          
                       </Card>
                     )
                   })
                 }
               </Grid>
-              
-              
-
             </VStack>
           }
         />
