@@ -7,6 +7,8 @@ interface Certificate {
       url: string;
     };
     date: string;
+    link: string;
+    provider: string;
   }
   
 interface SkillsHookResult {

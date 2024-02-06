@@ -19,13 +19,15 @@ interface Props {
 export default function About(props: Props) {
   const { locale, altLocale } = props;
 
-  const { t } = useTranslation('pages')
+  const { t } = useTranslation()
 
-  const title = t('about');
+  const title = t('pages:about');
 
-  const certificatesTitle = t('certificates');
+  const certificatesTitle = t('pages:certificates');
 
-  const skillsTitle = t('skills');
+  const skillsTitle = t('pages:skills');
+
+  const credentialTitle = t('about:credential')
 
   const { memorizedSkills, isLoading: skillsLoaded } = useGetSkills(locale, altLocale);
 
@@ -67,7 +69,7 @@ export default function About(props: Props) {
               </Heading>
 
               <Grid
-                templateColumns={["repeat(2, 1fr)","repeat(6, 10rem)"]}
+                templateColumns={["repeat(2, 1fr)","repeat(5, 1fr)"]}
                 autoRows="fit-content"
                 gap="1rem"
                 w="100%"
@@ -121,7 +123,7 @@ export default function About(props: Props) {
               </Heading>
 
               <Grid
-                templateColumns={["repeat(1, 1fr)","repeat(6, 12rem)"]}
+                templateColumns={["repeat(1, 1fr)","repeat(3, 1fr)"]}
                 autoRows="fit-content"
                 gap="1rem"
                 w="100%"
@@ -132,6 +134,12 @@ export default function About(props: Props) {
 
                     const { month } = transformDate(date, locale)
                     const { year } = transformDate(date)
+
+
+
+                    const openExternalLink = () => {
+                      window.open(certificate.link, '_blank');
+                    };
 
                     return(
                       <Card 
@@ -149,21 +157,6 @@ export default function About(props: Props) {
                             
                             <Divider />
 
-                            <HStack
-                              alignSelf='flex-start'
-                            >
-                              <CalendarIcon />
-
-                              <Text 
-                                opacity=".75" 
-                                fontSize="md"
-                                fontWeight="bold"
-                                
-                              >
-                                { `${month} ${year}` }
-                              </Text>
-                            </HStack>
-
                             <Text
                               fontSize="md"
                               fontWeight="bold"
@@ -172,6 +165,42 @@ export default function About(props: Props) {
                             >
                                 { certificate.name }  
                             </Text>
+
+                            <Text                   
+                              fontSize="sm"
+                              alignSelf='flex-start'
+                            >
+                              { certificate.provider }
+                            </Text>
+
+                            
+
+                            <Text 
+                              opacity=".75" 
+                              fontSize="sm"
+                              alignSelf='flex-start'
+                            >
+                              { `${month} ${year}` }
+                            </Text>
+                            
+
+                            <Button 
+                              aria-label="Abrir en otra pestaña"  
+                              onClick={openExternalLink} 
+                              borderWidth="0.1rem"
+                              borderStyle="solid"
+                              borderColor="brand.secondary"                              alignSelf='flex-start'
+                              opacity=".75" 
+                              color="brand.primary"
+                              w="100%"
+                              _hover={{
+                                bg: "brand.secondary"
+                              }}
+
+                            >
+                              { credentialTitle }
+                              <ExternalLinkIcon ml=".5rem" />              
+                            </Button>
                           </VStack>                    
                         </Skeleton>
                           

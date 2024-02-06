@@ -6,6 +6,8 @@ interface Certificate {
     url: string;
   };
   date: string;
+  link: string;
+  provider: string;
 }
 
 interface CertificateCollection {
@@ -22,6 +24,8 @@ const getCertificates = async (locale: String): Promise<CertificateCollection | 
                     url
                   }
                   date
+                  link
+                  provider
                 }
             }
         }
