@@ -69,7 +69,7 @@ export default function About(props: Props) {
               </Heading>
 
               <Grid
-                templateColumns={["repeat(2, 1fr)","repeat(5, 1fr)"]}
+                templateColumns={["repeat(2, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)", "repeat(4, 1fr)"]}
                 autoRows="fit-content"
                 gap="1rem"
                 w="100%"
@@ -123,7 +123,7 @@ export default function About(props: Props) {
               </Heading>
 
               <Grid
-                templateColumns={["repeat(1, 1fr)","repeat(3, 1fr)"]}
+                templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)"]}
                 autoRows="fit-content"
                 gap="1rem"
                 w="100%"
@@ -135,15 +135,13 @@ export default function About(props: Props) {
                     const { month } = transformDate(date, locale)
                     const { year } = transformDate(date)
 
-
-
                     const openExternalLink = () => {
                       window.open(certificate.link, '_blank');
                     };
 
                     return(
                       <Card 
-                        key="index" 
+                        key={ index }
                         h="100%"
                         w="100%"
                         bg="colors.white"
@@ -185,21 +183,22 @@ export default function About(props: Props) {
                             
 
                             <Button 
-                              aria-label="Abrir en otra pestaña"  
+                              aria-label= { credentialTitle }
                               onClick={openExternalLink} 
+                              alignSelf='flex-start'
                               borderWidth="0.1rem"
                               borderStyle="solid"
-                              borderColor="brand.secondary"                              alignSelf='flex-start'
+                              borderColor="brand.secondary"                             
                               opacity=".75" 
                               color="brand.primary"
                               w="100%"
                               _hover={{
                                 bg: "brand.secondary"
                               }}
-
+                              justifyContent="space-between"
                             >
                               { credentialTitle }
-                              <ExternalLinkIcon ml=".5rem" />              
+                              <ExternalLinkIcon />
                             </Button>
                           </VStack>                    
                         </Skeleton>
