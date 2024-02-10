@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import Head from 'next/head'
-import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar, Skeleton, SkeletonCircle, List, ListItem, ListIcon } from '@chakra-ui/react'
+import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar, Skeleton, SkeletonCircle, List, ListItem, ListIcon, Stack } from '@chakra-ui/react'
 import { CalendarIcon, DownloadIcon, ExternalLinkIcon, MinusIcon } from '@chakra-ui/icons';
 
 import useTranslation from 'next-translate/useTranslation';
@@ -96,7 +96,12 @@ export default function Projects(props: Props) {
                             
                             <Divider />
 
-                            <HStack w="100%" justify="space-between">
+                            <Stack 
+                              w="100%" 
+                              justify="space-between"
+                              direction={["column", "column", "row"]}
+                            
+                            >
                               <Text
                                 fontSize="md"
                                 as="h2"
@@ -117,7 +122,7 @@ export default function Projects(props: Props) {
                                     cursor="pointer"
                                     bg="brand.primary"
                                     p="1rem 1.5rem"
-                                    color="colors.white"
+                                    color="colors.white"                      
                                   >
                                       Github   
                                   </Button>
@@ -140,7 +145,7 @@ export default function Projects(props: Props) {
                                   </Button>
                                 ) : null
                               }
-                            </HStack>
+                            </Stack>
 
                             
                             <Text                   
