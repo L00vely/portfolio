@@ -117,6 +117,7 @@ export default function Projects(props: Props) {
                                     cursor="pointer"
                                     bg="brand.primary"
                                     p="1rem 1.5rem"
+                                    color="colors.white"
                                   >
                                       Github   
                                   </Button>
@@ -133,6 +134,7 @@ export default function Projects(props: Props) {
                                     cursor="pointer"
                                     bg="brand.secondary"
                                     p="1rem 1.5rem"
+                                    color="colors.white"
                                   >
                                     Deploy   
                                   </Button>
