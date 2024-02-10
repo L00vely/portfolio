@@ -7,7 +7,10 @@ interface Project {
   };
   deployLink?: string;
   githubLink?: string;
+  description: string;
+  technologies: string[];
 }
+
 
 interface ProjectCollection {
   items: Project[];
@@ -24,6 +27,8 @@ const getProjects = async (locale: String): Promise<ProjectCollection | undefine
                   }
                   deployLink
                   githubLink
+                  description
+                  technologies
                 }
             }
         }

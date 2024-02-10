@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import Head from 'next/head'
-import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar, Skeleton, SkeletonCircle } from '@chakra-ui/react'
-import { CalendarIcon, DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { Card, Flex, Heading, Text, Image, Grid, HStack, Box, VStack, ScaleFade, useDisclosure, Button, Tooltip, Collapse, Divider, useColorModeValue, useBreakpointValue, Avatar, Skeleton, SkeletonCircle, List, ListItem, ListIcon } from '@chakra-ui/react'
+import { CalendarIcon, DownloadIcon, ExternalLinkIcon, MinusIcon } from '@chakra-ui/icons';
 
 import useTranslation from 'next-translate/useTranslation';
 import Section from '@/components/Section';
@@ -9,6 +9,8 @@ import useGetSkills from '@/hooks/useGetSkills';
 import { ModificableCard } from '@/components';
 import { transformDate } from '@/utils/transformDate';
 import useGetCertificates from '@/hooks/useGetCertificates';
+import useGetProjects from '@/hooks/useGetProjects';
+import { GrGithub } from 'react-icons/gr';
 
 interface Props {
   locale: string;
@@ -17,6 +19,7 @@ interface Props {
 }
 
 export default function Projects(props: Props) {
+  
 
   const { locale, altLocale } = props;
 
@@ -24,8 +27,9 @@ export default function Projects(props: Props) {
 
   const title = t('projects');
 
+  const technologiesTitle = t('technologies')
 
-  const { memorizedSkills, isLoading: skillsLoaded } = useGetSkills(locale, altLocale);
+  const { memorizedProjects, isLoading: projectsLoaded } = useGetProjects(locale);
 
 
   const color = useColorModeValue("colors.gray", "colors.white")
@@ -62,33 +66,127 @@ export default function Projects(props: Props) {
               </Heading>
 
               <Grid
-                templateColumns={["repeat(2, 1fr)","repeat(6, 10rem)"]}
+                templateColumns={["repeat(1, 1fr)","repeat(2, 1fr)"]}
                 autoRows="fit-content"
-                gap="1rem"
+                gap="2rem"
                 w="100%"
               >
                 {
-                  memorizedSkills.map((skill, index) => {
-                    const { icon, name } = skill;
+                  memorizedProjects.map((project, index) => {
+                    const { name, thumbnail, deployLink, githubLink, description, technologies } = project;
+
+                    const openExternalLink = (link: string): void => {
+                      window.open(link, '_blank');
+                    };
+                  
 
                     return(
                       <Card 
-                        key="index" 
+                        key={ index }
                         h="100%"
                         w="100%"
                         bg="colors.white"
                         boxShadow="lg"
                         p="1rem"
                       >
-                        <VStack h="100%" w="100%" align="center" >
-                          <SkeletonCircle size='16' isLoaded={!skillsLoaded}>
-                            <Image src={ icon } alt={ name } w={16} h={16}/>
-                          </SkeletonCircle>
+                        <Skeleton isLoaded={!projectsLoaded}>
+                          <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
+                          
+                            <Image alt={name} src={ thumbnail.url } w="100%" h="auto"/>
+                            
+                            <Divider />
 
-                          <Skeleton isLoaded={!skillsLoaded}>
-                              <Text color="colors.gray"> { name }</Text>
-                          </Skeleton>
-                        </VStack>                    
+                            <HStack w="100%" justify="space-between">
+                              <Text
+                                fontSize="md"
+                                as="h2"
+                                fontWeight="bold"
+                                alignSelf='flex-start'
+                                w="100%"
+                              >
+                                  { name }  
+                              </Text>
+
+                              {
+                                githubLink ? (
+                                  <Button 
+                                    leftIcon={<GrGithub />} 
+                                    onClick={() => 
+                                      openExternalLink(githubLink)
+                                    } 
+                                    cursor="pointer"
+                                    bg="brand.primary"
+                                    p="1rem 1.5rem"
+                                  >
+                                      Github   
+                                  </Button>
+                                ) : null
+                              }
+
+                              {
+                                deployLink ? (
+                                  <Button 
+                                    leftIcon={<ExternalLinkIcon />} 
+                                    onClick={() => 
+                                      openExternalLink(deployLink)
+                                    } 
+                                    cursor="pointer"
+                                    bg="brand.secondary"
+                                    p="1rem 1.5rem"
+                                  >
+                                    Deploy   
+                                  </Button>
+                                ) : null
+                              }
+                            </HStack>
+
+                            
+                            <Text                   
+                              fontSize="md"
+                              alignSelf='flex-start'
+                              textAlign="left"
+                            >
+                              { description }
+                            </Text>
+
+                            <VStack w="100%">
+                              <Text
+                                fontSize="sm"
+                                fontWeight="bold"
+                                alignSelf='flex-start'
+                                textAlign="left"
+                              >
+                                { technologiesTitle }
+                              </Text>
+                              <List w="100%" spacing={1} >
+                                {
+                                  technologies?.map(( technology, index ) => {
+                                    return(
+                                      <ListItem 
+                                        key={ index }
+                                        as="li"
+                                        fontSize="sm"
+                                        
+                                      > 
+                                        <ListIcon as={MinusIcon} color='brand.secondary' />
+                                        { technology }
+                                      </ListItem>
+                                    )
+                                  })
+                                }
+                              </List>
+                            </VStack>
+
+                            {/* <Text                   
+                              fontSize="sm"
+                              alignSelf='flex-start'
+                            >
+                              { deployLink }
+                            </Text>                     */}
+
+                            
+                          </VStack>                    
+                        </Skeleton>                   
                   
                       </Card>
                     )

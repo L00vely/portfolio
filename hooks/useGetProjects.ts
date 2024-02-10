@@ -8,6 +8,8 @@ interface Project {
   };
   deployLink?: string;
   githubLink?: string;
+  description: string;
+  technologies: string [];
 }
 
 interface ProjectsHookResult {
@@ -20,7 +22,7 @@ interface ProjectsHookResult {
     const [isLoading, setIsLoading] = useState<Boolean>(true);
 
     useEffect(() => {
-      const fetchSkills = async () => {
+      const fetchProjects = async () => {
         try {
           const fetchedProjects = await getProjects(locale);
           if (fetchedProjects) {
@@ -32,7 +34,7 @@ interface ProjectsHookResult {
         }
       };
 
-      fetchSkills();
+      fetchProjects();
     }, [locale]);
 
   
