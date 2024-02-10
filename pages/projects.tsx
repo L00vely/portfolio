@@ -66,7 +66,7 @@ export default function Projects(props: Props) {
               </Heading>
 
               <Grid
-                templateColumns={["repeat(1, 1fr)","repeat(2, 1fr)"]}
+                templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)"]}
                 autoRows="fit-content"
                 gap="2rem"
                 w="100%"
