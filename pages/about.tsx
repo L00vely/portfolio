@@ -196,8 +196,10 @@ export default function About(props: Props) {
                                 bg: "brand.secondary"
                               }}
                               justifyContent="space-between"
-                            >
-                              { credentialTitle }
+                            > 
+                              <Text fontSize={["sm", "sm", "md", "md"]}>
+                                { credentialTitle }
+                              </Text>
                               <ExternalLinkIcon />
                             </Button>
                           </VStack>                    
