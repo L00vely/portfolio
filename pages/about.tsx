@@ -51,7 +51,6 @@ export default function About(props: Props) {
       
 
       <VStack w="100%" h="100%" spacing="0">
-        
         <Section
           justifyContent="flex-start"
           alignItems="center"
@@ -68,40 +67,37 @@ export default function About(props: Props) {
                 { skillsTitle }
               </Heading>
 
-              <Grid
-                templateColumns={["repeat(2, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)", "repeat(4, 1fr)"]}
-                autoRows="fit-content"
-                gap="1rem"
-                w="100%"
-              >
-                {
-                  memorizedSkills.map((skill, index) => {
-                    const { icon, name } = skill;
+              <Skeleton isLoaded={!skillsLoaded} w="100%" h="100%">
+                <Grid
+                  templateColumns={["repeat(2, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)", "repeat(5, 1fr)"]}
+                  autoRows="fit-content"
+                  gap="1rem"
+                  w="100%"
+                >
+                  {
+                    memorizedSkills.map((skill, index) => {
+                      const { icon, name } = skill;
 
-                    return(
-                      <Card 
-                        key="index" 
-                        h="100%"
-                        w="100%"
-                        bg="colors.white"
-                        boxShadow="lg"
-                        p="1rem"
-                      >
-                        <VStack h="100%" w="100%" align="center" >
-                          <SkeletonCircle size='16' isLoaded={!skillsLoaded}>
-                            <Image src={ icon } alt={ name } w={16} h={16}/>
-                          </SkeletonCircle>
+                      return(
+                        <Card 
+                          key="index" 
+                          h="100%"
+                          w="100%"
+                          bg="colors.white"
+                          boxShadow="none"
+                          p="1rem"
+                        >
+                          <HStack h="100%" align="center" >
+                              <Image src={ icon } alt={ name } w="auto" h="auto"/>
 
-                          <Skeleton isLoaded={!skillsLoaded}>
                               <Text color="colors.gray"> { name }</Text>
-                          </Skeleton>
-                        </VStack>                    
-                  
-                      </Card>
-                    )
-                  })
-                }
-              </Grid>
+                          </HStack>                    
+                        </Card>
+                      )
+                    })
+                  }
+                </Grid>
+              </Skeleton>
             </VStack>
           }
         />
@@ -121,34 +117,35 @@ export default function About(props: Props) {
               > 
                 { certificatesTitle }
               </Heading>
+              
+              <Skeleton isLoaded={!certificatesLoaded} w="100%" h="100%"> 
+                <Grid
+                  templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)"]}
+                  autoRows="fit-content"
+                  gap="1rem"
+                  w="100%"
+                >
+                  {
+                    memorizedCertificates.map((certificate, index) => {
+                      const { certificate: image , date, name } = certificate;
 
-              <Grid
-                templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)"]}
-                autoRows="fit-content"
-                gap="1rem"
-                w="100%"
-              >
-                {
-                  memorizedCertificates.map((certificate, index) => {
-                    const { certificate: image , date, name } = certificate;
+                      const { month } = transformDate(date, locale)
+                      const { year } = transformDate(date)
 
-                    const { month } = transformDate(date, locale)
-                    const { year } = transformDate(date)
+                      const openExternalLink = () => {
+                        window.open(certificate.link, '_blank');
+                      };
 
-                    const openExternalLink = () => {
-                      window.open(certificate.link, '_blank');
-                    };
-
-                    return(
-                      <Card 
-                        key={ index }
-                        h="100%"
-                        w="100%"
-                        bg="colors.white"
-                        boxShadow="lg"
-                        p="1rem"
-                      >
-                        <Skeleton isLoaded={!certificatesLoaded}>
+                      return(
+                        <Card 
+                          key={ index }
+                          h="100%"
+                          w="100%"
+                          bg="colors.white"
+                          boxShadow="none"
+                          p="1rem"
+                        >
+                          
                           <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
                           
                             <Image alt={name} src={ image.url } w="32" h="32"/>
@@ -203,16 +200,18 @@ export default function About(props: Props) {
                               <ExternalLinkIcon />
                             </Button>
                           </VStack>                    
-                        </Skeleton>
                           
-                      </Card>
-                    )
-                  })
-                }
-              </Grid>
+                            
+                        </Card>
+                      )
+                    })
+                  }
+                </Grid>
+              </Skeleton>
             </VStack>
           }
         />
+      
       </VStack>
 
       

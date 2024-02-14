@@ -65,141 +65,142 @@ export default function Projects(props: Props) {
                 { title }
               </Heading>
 
-              <Grid
-                templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)"]}
-                autoRows="fit-content"
-                gap="2rem"
-                w="100%"
-              >
-                {
-                  memorizedProjects.map((project, index) => {
-                    const { name, thumbnail, deployLink, githubLink, description, technologies } = project;
+              <Skeleton isLoaded={!projectsLoaded} w="100%" h="100%">
+                <Grid
+                  templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)"]}
+                  autoRows="fit-content"
+                  gap="2rem"
+                  w="100%"
+                >
+                  {
+                    memorizedProjects.map((project, index) => {
+                      const { name, thumbnail, deployLink, githubLink, description, technologies } = project;
 
-                    const openExternalLink = (link: string): void => {
-                      window.open(link, '_blank');
-                    };
-                  
+                      const openExternalLink = (link: string): void => {
+                        window.open(link, '_blank');
+                      };
+                    
 
-                    return(
-                      <Card 
-                        key={ index }
-                        h="100%"
-                        w="100%"
-                        bg="colors.white"
-                        boxShadow="lg"
-                        p="1rem"
-                      >
-                        <Skeleton isLoaded={!projectsLoaded}>
-                          <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
-                          
-                            <Image alt={name} src={ thumbnail.url } w="100%" h="auto"/>
+                      return(
+                        <Card 
+                          key={ index }
+                          h="100%"
+                          w="100%"
+                          bg="colors.white"
+                          boxShadow="lg"
+                          p="1rem"
+                        >
+                            <VStack h="100%" w="100%" align="center" spacing="1rem" color="colors.gray">
+                              
                             
-                            <Divider />
+                              <Image alt={name} src={ thumbnail.url } w="100%" h="auto"/>
+                              
+                              <Divider />
 
-                            <Stack 
-                              w="100%" 
-                              justify="space-between"
-                              direction={["column", "column", "row"]}
-                            
-                            >
-                              <Text
-                                fontSize="md"
-                                as="h2"
-                                fontWeight="bold"
-                                alignSelf='flex-start'
-                                w="100%"
+                              <Stack 
+                                w="100%" 
+                                justify="space-between"
+                                direction={["column", "column", "row"]}
+                              
                               >
-                                  { name }  
-                              </Text>
+                                <Text
+                                  fontSize="md"
+                                  as="h2"
+                                  fontWeight="bold"
+                                  alignSelf='flex-start'
+                                  w="100%"
+                                >
+                                    { name }  
+                                </Text>
 
-                              {
-                                githubLink ? (
-                                  <Button 
-                                    leftIcon={<GrGithub />} 
-                                    onClick={() => 
-                                      openExternalLink(githubLink)
-                                    } 
-                                    cursor="pointer"
-                                    bg="brand.primary"
-                                    p="1rem 1.5rem"
-                                    color="colors.white"                      
-                                  >
-                                      Github   
-                                  </Button>
-                                ) : null
-                              }
+                                {
+                                  githubLink ? (
+                                    <Button 
+                                      leftIcon={<GrGithub />} 
+                                      onClick={() => 
+                                        openExternalLink(githubLink)
+                                      } 
+                                      cursor="pointer"
+                                      bg="brand.primary"
+                                      p="1rem 1.5rem"
+                                      color="colors.white"                      
+                                      >
+                                        Github   
+                                    </Button>
+                                  ) : null
+                                }
 
-                              {
-                                deployLink ? (
-                                  <Button 
-                                    leftIcon={<ExternalLinkIcon />} 
-                                    onClick={() => 
-                                      openExternalLink(deployLink)
-                                    } 
-                                    cursor="pointer"
-                                    bg="brand.secondary"
-                                    p="1rem 1.5rem"
-                                    color="colors.white"
-                                  >
-                                    Deploy   
-                                  </Button>
-                                ) : null
-                              }
-                            </Stack>
+                                {
+                                  deployLink ? (
+                                    <Button 
+                                      leftIcon={<ExternalLinkIcon />} 
+                                      onClick={() => 
+                                        openExternalLink(deployLink)
+                                      } 
+                                      cursor="pointer"
+                                      bg="brand.secondary"
+                                      p="1rem 1.5rem"
+                                      color="colors.white"
+                                      >
+                                      Deploy   
+                                    </Button>
+                                  ) : null
+                                }
+                              </Stack>
 
-                            
-                            <Text                   
-                              fontSize="md"
-                              alignSelf='flex-start'
-                              textAlign="left"
-                            >
-                              { description }
-                            </Text>
-
-                            <VStack w="100%">
-                              <Text
-                                fontSize="sm"
-                                fontWeight="bold"
+                              
+                              <Text                   
+                                fontSize="md"
                                 alignSelf='flex-start'
                                 textAlign="left"
-                              >
-                                { technologiesTitle }
+                                >
+                                { description }
                               </Text>
-                              <List w="100%" spacing={1} >
-                                {
-                                  technologies?.map(( technology, index ) => {
-                                    return(
-                                      <ListItem 
-                                        key={ index }
-                                        as="li"
-                                        fontSize="sm"
-                                        
-                                      > 
-                                        <ListIcon as={MinusIcon} color='brand.secondary' />
-                                        { technology }
-                                      </ListItem>
-                                    )
-                                  })
-                                }
-                              </List>
-                            </VStack>
 
-                            {/* <Text                   
-                              fontSize="sm"
-                              alignSelf='flex-start'
-                            >
+                              <VStack w="100%">
+                                <Text
+                                  fontSize="sm"
+                                  fontWeight="bold"
+                                  alignSelf='flex-start'
+                                  textAlign="left"
+                                  >
+                                  { technologiesTitle }
+                                </Text>
+                                <List w="100%" spacing={1} >
+                                  {
+                                    technologies?.map(( technology, index ) => {
+                                      return(
+                                        <ListItem 
+                                        key={ index }
+                                          as="li"
+                                          fontSize="sm"
+                                          
+                                          > 
+                                          <ListIcon as={MinusIcon} color='brand.secondary' />
+                                          { technology }
+                                        </ListItem>
+                                      )
+                                    })
+                                  }
+                                </List>
+                              </VStack>
+
+                              {/* <Text                   
+                                fontSize="sm"
+                                alignSelf='flex-start'
+                              >
                               { deployLink }
                             </Text>                     */}
 
-                            
-                          </VStack>                    
-                        </Skeleton>                   
-                  
-                      </Card>
-                    )
-                  })
-                }
-              </Grid>
+                              
+                            </VStack>                    
+                    
+                        </Card>
+                      )
+                    })
+                  }
+                </Grid>
+              </Skeleton>                   
             </VStack>
           }
         />
