@@ -69,7 +69,7 @@ export default function About(props: Props) {
 
               <Skeleton isLoaded={!skillsLoaded} w="100%" h="100%">
                 <Grid
-                  templateColumns={["repeat(2, 1fr)","repeat(2, 1fr)","repeat(3, 1fr)", "repeat(5, 1fr)"]}
+                  templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(3, 1fr)", "repeat(5, 1fr)"]}
                   autoRows="fit-content"
                   gap="1rem"
                   w="100%"
